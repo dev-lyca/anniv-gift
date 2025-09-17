@@ -7,7 +7,6 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 export type Memory = {
   title: string;
   date: string;
-  note: string;
   image: string;
 };
 
