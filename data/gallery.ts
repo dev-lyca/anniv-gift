@@ -203,42 +203,6 @@ const rawData = [
     caption: "Pogi ko rito",
     quote: "Kunware guitarist ako pero yung photographer pala expert hehehe",
   },
-  {
-    caption: "Capitol date",
-    quote: "Laging bbq bbq bbq",
-  },
-  {
-    caption: "Tambay sa bato",
-    quote: "Feel na feel ni shalaney to na para bang sya yung tao",
-  },
-  {
-    caption: "Tambay sa bato",
-    quote: "Dapit hapon sa bato",
-  },
-  {
-    caption: "Coffee Date",
-    quote: "Kape sa harap ng dagat habang lumilipad mga buhangin",
-  },
-  {
-    caption: "MCdo treat",
-    quote: "Sino gumastos nittooooooo HAHAHHA",
-  },
-  {
-    caption: "Pasalubong",
-    quote: "Pasalubong mo to sakin after school yieeee",
-  },
-  {
-    caption: "Review ni bebe",
-    quote: "Review review ket sakin naman talaga nakafocus",
-  },
-  {
-    caption: "Sundo",
-    quote: "Joyride papunta sayo nong uuwi ka galing smx",
-  },
-  {
-    caption: "Tambay sa bato",
-    quote: "Tambay kasama na naman ang aso",
-  },
 ];
 
 export const gallery: Galleries = rawData.map((item, i) => ({

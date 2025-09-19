@@ -1,5 +1,6 @@
 "use client";
 
+import BubbleBG from "@/components/bubble-bg";
 import { gallery } from "@/data/gallery";
 import { Galleries } from "@/types";
 import { Card, Image } from "@heroui/react";
@@ -150,6 +151,7 @@ export default function Gallery() {
           </motion.div>
         )}
       </AnimatePresence>
+      <BubbleBG/>
     </section>
   );
 }

@@ -54,12 +54,12 @@ export const Navbar = () => {
         <NavbarMenuToggle className="text-white" />
       </NavbarContent>
 
-      <NavbarMenu className="bg-[#cf7973] text-white">
+      <NavbarMenu className="bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)] text-white">
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                className="hover:text-[#fd9e8a] transition-colors"
+                className="text-white hover:text-[#fd9e8a] transition-colors"
                 href="#"
                 size="lg"
               >

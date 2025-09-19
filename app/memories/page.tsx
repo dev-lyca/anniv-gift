@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cards";
 
+import BubbleBG from "@/components/bubble-bg";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
 export default function Memories() {
@@ -51,7 +52,6 @@ export default function Memories() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  {/* Background image with fade-in */}
                   <motion.div
                     className="absolute inset-0 bg-cover bg-center opacity-30"
                     style={{ backgroundImage: `url(${memory.image})` }}
@@ -60,7 +60,6 @@ export default function Memories() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                   />
 
-                  {/* Foreground content */}
                   <motion.div
                     className="relative flex flex-col items-center p-4"
                     initial={{ opacity: 0, y: 20 }}
@@ -102,6 +101,7 @@ export default function Memories() {
           </Swiper>
         </div>
       </div>
+      <BubbleBG />
     </section>
   );
 }
