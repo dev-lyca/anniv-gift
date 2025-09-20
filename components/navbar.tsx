@@ -59,8 +59,9 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
+                as={NextLink}
                 className="text-white hover:text-[#fd9e8a] transition-colors"
-                href="#"
+                href={item.href}
                 size="lg"
               >
                 {item.label}

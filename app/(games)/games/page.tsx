@@ -10,11 +10,7 @@ const games = [
     desc: "Guess the top word!",
   },
   {
-    title: "Puzzle Game",
-    desc: "Solve the puzzle and reveal a special memory.",
-  },
-  {
-    title: "Heart Catcher Game",
+    title: "Crossword Puzzle",
     desc: "Catch falling hearts — simple, cute, and fun!",
   },
 ];

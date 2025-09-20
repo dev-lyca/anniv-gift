@@ -3,42 +3,19 @@
 import BubbleBG from "@/components/bubble-bg";
 import { Button, Card, Modal, ModalContent } from "@heroui/react";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function Letter() {
   const [open, setOpen] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const paragraph = `
-Hi, my love. Happy anniversary to us! 💖 I wish I didn’t have work today so I 
-could be with you, but instead, I poured my heart into making this for you. 
-Thank you for always staying by my side, for loving me even through my flaws. 
-I know neither of us is perfect, and yet, every day you choose me — and that’s 
-more than enough reason for me to choose you over and over again. Yes, there are 
-arguments and misunderstandings — that’s normal, especially with how comfortable 
-we’ve grown with each other. But please know, I’m sorry for the mistakes I’ve made. 
-I’m blessed to have you — someone who never leaves, who loves me whether I have 
-everything or nothing. Mahal, thank you so much for being you. I love you deeply. 
-I promise I’ll make it up to you once I get the job, but for now, let this be my little gift.  
-Happy anniversary, my love. Here’s to more dates, laughter, food trips, silly fights, 
-and endless memories together. You are my best, my enough, and my forever. 
-Always take care of yourself, and remember — I’ll be here for you through thick and thin. 
-Here’s to us, to our love, and to many, many more years together. 🥂💖
+Hi, Baby! Happy anniversary to us! Sayang, Wala ako work para sana mapuntahan ka :(( so I made this para makabawi sa efforts mk sakin. I really hope magustuhan mo ito. I am thankful to you, for always being there up until now. Thank youu kasi di ka nagsasawa. I know I'm not perfect, we both aren't. But the fact that you still chose to stay here are enough for me to choose you everyday also. There's always arguments and misunderstandings, di na Yan mawawala Lalo at matagal na Tayo and really, comfortable na Tayo sobra sa isat isa. I just want also to take this as my opportunity to apologize for all those things I have said and done. I'm really sorry kasi di ako naging maayos na gf. I'm really blessed kasi Meron akong Ikaw na laging andyan for me, to help me. Meron man ako o Wala. Thank you so much, mahal kasi mahal mo ako. Mahal din kita. I will surely treat you and make it up to you as soon as I got the job. For now, ito na Muna. Happy anniversary to uss anddd cheers to more dates, lamon, and away! hahahaha I love you so much,.mahalko. the best ka, enough ka, and mahal kita. Take care of yourself and always know that I am always be here for you through thick and thin. For more years together!! Chheeeersss!
 `;
 
   const words = paragraph.split(" ");
 
-  const handleOpen = () => {
-    setOpen(true);
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {
-        console.log("Autoplay blocked, user must interact");
-      });
-    }
-  };
   return (
     <section className="relative bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)] text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
-      <audio ref={audioRef} src="/music/bg.mp3" loop />
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -91,7 +68,7 @@ Here’s to us, to our love, and to many, many more years together. 🥂💖
               My Dearest Love
             </h3>
             <div className="relative">
-              <p className="text-lg leading-relaxed text-gray-200 whitespace-pre-line">
+              <p className="text-lg leading-normal text-gray-200 whitespace-pre-line">
                 {words.map((word, idx) => (
                   <motion.span
                     key={idx}

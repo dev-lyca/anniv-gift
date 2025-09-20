@@ -1,89 +1,245 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import BubbleBG from "@/components/bubble-bg";
+import { Button, Card, Modal, ModalContent } from "@heroui/react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
-const ROWS = 2;
-const COLS = 3;
-const TOTAL_PIECES = ROWS * COLS;
-const IMAGE_URL = "https://i.imgur.com/tWeiDj5.jpeg"; // 💖 Replace with your photo
+type Cell = {
+  letter: string | null;
+  userInput?: string;
+  number?: number;
+};
 
-export default function PuzzleGame() {
-  const [tiles, setTiles] = useState<number[]>([]);
-  const [dragging, setDragging] = useState<number | null>(null);
-  const [isSolved, setIsSolved] = useState(false);
+const GRID_SIZE = 12;
 
-  // initialize puzzle shuffled
-  useEffect(() => {
-    const arr = Array.from({ length: TOTAL_PIECES }, (_, i) => i);
-    const shuffled = arr.sort(() => Math.random() - 0.5);
-    setTiles(shuffled);
-  }, []);
+const WORDS = [
+  {
+    word: "LOVE",
+    row: 0,
+    col: 0,
+    direction: "across",
+    clue: "What I feel for you 💖",
+  },
+  {
+    word: "FOREVER",
+    row: 1,
+    col: 6,
+    direction: "down",
+    clue: "How long I’ll choose you ⏳",
+  },
+  {
+    word: "ANNIVERSARY",
+    row: 4,
+    col: 1,
+    direction: "across",
+    clue: "The special day we celebrate 🎉",
+  },
+  {
+    word: "MEMORIES",
+    row: 7,
+    col: 2,
+    direction: "across",
+    clue: "Our collection of moments 📸",
+  },
+];
 
-  // check if solved
-  useEffect(() => {
-    if (tiles.length > 0 && tiles.every((val, idx) => val === idx)) {
-      setIsSolved(true);
+export default function CrosswordPage() {
+  const initializer = () => {
+    const grid: Cell[][] = Array.from({ length: GRID_SIZE }, () =>
+      Array.from({ length: GRID_SIZE }, () => ({ letter: null }))
+    );
+
+    let clueCounter = 1;
+    const numberedWords: Array<{
+      number: number;
+      word: string;
+      clue: string;
+      direction: string;
+    }> = [];
+
+    WORDS.forEach(({ word, row, col, direction, clue }) => {
+      word.split("").forEach((ch, i) => {
+        const r = direction === "across" ? row : row + i;
+        const c = direction === "across" ? col + i : col;
+        if (r < GRID_SIZE && c < GRID_SIZE) {
+          if (i === 0 && !grid[r][c].number) {
+            grid[r][c].number = clueCounter++;
+          }
+          grid[r][c].letter = ch.toUpperCase();
+        } else {
+          console.warn(
+            `Word "${word}" char "${ch}" at (${r},${c}) is out of bounds`
+          );
+        }
+      });
+
+      const startCellNumber =
+        grid[row] && grid[row][col] ? grid[row][col].number : undefined;
+      numberedWords.push({
+        number: startCellNumber ?? clueCounter++,
+        word,
+        clue,
+        direction,
+      });
+    });
+
+    numberedWords.sort((a, b) => a.number - b.number);
+
+    return { grid, numberedWords };
+  };
+
+  const { grid: initialGrid, numberedWords } = initializer();
+
+  const [grid, setGrid] = useState<Cell[][]>(initialGrid);
+  const [open, setOpen] = useState(false);
+
+  const handleChange = (r: number, c: number, value: string) => {
+    setGrid((prev) => {
+      const copy = prev.map((row) => row.map((cell) => ({ ...cell })));
+      copy[r][c].userInput = value.toUpperCase().slice(-1);
+      return copy;
+    });
+  };
+
+  const checkWin = () => {
+    for (let r = 0; r < GRID_SIZE; r++) {
+      for (let c = 0; c < GRID_SIZE; c++) {
+        const cell = grid[r][c];
+        if (cell.letter && cell.letter !== (cell.userInput || "")) {
+          return false;
+        }
+      }
     }
-  }, [tiles]);
-
-  const handleDragStart = (index: number) => {
-    setDragging(index);
+    return true;
   };
 
-  const handleDrop = (index: number) => {
-    if (dragging === null) return;
-    const newTiles = [...tiles];
-    [newTiles[dragging], newTiles[index]] = [
-      newTiles[index],
-      newTiles[dragging],
-    ];
-    setTiles(newTiles);
-    setDragging(null);
+  const handleCheck = () => {
+    if (checkWin()) {
+      setOpen(true);
+    } else {
+      alert("Not yet complete — keep going! 💪");
+    }
   };
+
+  const acrossClues = numberedWords.filter((w) => w.direction === "across");
+  const downClues = numberedWords.filter((w) => w.direction === "down");
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-neutral-950 via-black to-neutral-900 text-white p-6">
-      <h1 className="text-4xl font-bold mb-6">Puzzle Game 🧩</h1>
-      <p className="text-gray-400 mb-8">Put the pieces back together 💕</p>
-
-      {/* Puzzle Grid */}
-      <div
-        className="grid bg-neutral-800 rounded-lg overflow-hidden shadow-xl"
-        style={{
-          gridTemplateColumns: `repeat(${COLS}, 120px)`,
-          gridTemplateRows: `repeat(${ROWS}, 120px)`,
-        }}
+    <section className="min-h-screen bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)] flex flex-col items-center justify-center  p-6">
+      <Card
+        className="p-6 border border-neutral-700 bg-gradient-to-br from-neutral-900/60
+         to-neutral-800/70 shadow-lg rounded-2xl"
       >
-        {tiles.map((tile, idx) => {
-          // correct position in full image
-          const row = Math.floor(tile / COLS);
-          const col = tile % COLS;
+        <h1 className="text-3xl font-bold text-rose-600 mb-4 text-center">
+          Anniversary Crossword 💌
+        </h1>
 
-          return (
-            <div
-              key={idx}
-              draggable
-              onDragStart={() => handleDragStart(idx)}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={() => handleDrop(idx)}
-              className="w-[120px] h-[120px] border border-neutral-700 cursor-grab active:cursor-grabbing"
-              style={{
-                backgroundImage: `url(${IMAGE_URL})`,
-                backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
-                backgroundPosition: `${(col / (COLS - 1)) * 100}% ${(row / (ROWS - 1)) * 100}%`,
-              }}
-            />
-          );
-        })}
-      </div>
-
-      {isSolved && (
-        <div className="mt-8 text-center animate-bounce">
-          <h2 className="text-2xl font-semibold text-pink-400">
-            You complete me 💕
-          </h2>
+        <div
+          className="grid gap-1 mb-6"
+          style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 2rem)` }}
+        >
+          {grid.map((row, r) =>
+            row.map((cell, c) =>
+              cell.letter ? (
+                <div key={`${r}-${c}`} className="relative">
+                  {cell.number && (
+                    <span className="absolute text-[0.55rem] text-gray-900 top-0 left-0 pl-[2px]">
+                      {cell.number}
+                    </span>
+                  )}
+                  <input
+                    value={cell.userInput || ""}
+                    onChange={(e) => handleChange(r, c, e.target.value)}
+                    className="w-8 h-8 border text-center font-bold text-lg uppercase bg-white text-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                    maxLength={1}
+                    inputMode="text"
+                    aria-label={`Cell ${r + 1}-${c + 1}`}
+                  />
+                </div>
+              ) : (
+                <div key={`${r}-${c}`} className="w-8 h-8 bg-gray-600" />
+              )
+            )
+          )}
         </div>
-      )}
+
+        <div className="grid grid-cols gap-6 mb-4">
+          <div>
+            <h2 className="font-bold text-rose-200">Across</h2>
+            <ul className="mb-2 list-decimal list-inside text-gray-100">
+              {acrossClues.map((w) => (
+                <li key={w.number} className="mb-1">
+                  <span className="font-semibold mr-2">{w.number}.</span>
+                  <span>{w.clue}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-bold text-rose-200">Down</h2>
+            <ul className="list-decimal list-inside text-gray-100">
+              {downClues.map((w) => (
+                <li key={w.number} className="mb-1">
+                  <span className="font-semibold mr-2">{w.number}.</span>
+                  <span>{w.clue}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex justify-center gap-4">
+          <Button
+            color="secondary"
+            className="bg-rose-500 text-white px-6 py-2 rounded-full shadow-md hover:bg-rose-600"
+            onPress={handleCheck}
+          >
+            Check Answers
+          </Button>
+          <Button
+            color="danger"
+            className="px-6 py-2 rounded-full"
+            onPress={() => {
+              setGrid((prev) =>
+                prev.map((row) =>
+                  row.map((cell) => ({ ...cell, userInput: "" }))
+                )
+              );
+            }}
+          >
+            Reset
+          </Button>
+        </div>
+      </Card>
+
+      <Modal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        size="md"
+        placement="center"
+      >
+        <ModalContent className="p-6 text-center bg-gradient-to-br from-rose-600 to-pink-500 text-white rounded-2xl">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.45 }}
+          >
+            <h2 className="text-3xl font-bold mb-3">You Did It! 🎉</h2>
+            <p className="text-lg mb-4">
+              Just like this crossword, we fit together perfectly. 💖
+            </p>
+            <Button
+              className="mt-2 bg-white text-rose-600 font-semibold rounded-full"
+              onPress={() => setOpen(false)}
+            >
+              Close
+            </Button>
+          </motion.div>
+        </ModalContent>
+      </Modal>
+      <BubbleBG />
     </section>
   );
 }
