@@ -5,7 +5,7 @@ import BubbleBG from "./bubble-bg";
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)] text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
+    <section className="relative bg-gradient-to-br from-neutral-900/60 to-neutral-800/70 text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
       <div className="container mx-auto text-center relative z-5 max-w-4xl">
         <h1 className="text-5xl md:text-7xl font-extrabold font-stretch-expanded font-serif mb-6 animate-fadeInDown">
           Welcome, Baby!

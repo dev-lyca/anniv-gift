@@ -126,67 +126,69 @@ export default function CrosswordPage() {
   const downClues = numberedWords.filter((w) => w.direction === "down");
 
   return (
-    <section className="min-h-screen bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)] flex flex-col items-center justify-center  p-6">
+    <section className="relative bg-gradient-to-br from-neutral-900/60 to-neutral-800/70 text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
       <Card
         className="p-6 border border-neutral-700 bg-gradient-to-br from-neutral-900/60
          to-neutral-800/70 shadow-lg rounded-2xl"
       >
-        <h1 className="text-3xl font-bold text-rose-600 mb-4 text-center">
+        <h1 className="text-3xl font-bold text-orange-600 mb-4 text-center">
           Anniversary Crossword 💌
         </h1>
 
-        <div
-          className="grid gap-1 mb-6"
-          style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 2rem)` }}
-        >
-          {grid.map((row, r) =>
-            row.map((cell, c) =>
-              cell.letter ? (
-                <div key={`${r}-${c}`} className="relative">
-                  {cell.number && (
-                    <span className="absolute text-[0.55rem] text-gray-900 top-0 left-0 pl-[2px]">
-                      {cell.number}
-                    </span>
-                  )}
-                  <input
-                    value={cell.userInput || ""}
-                    onChange={(e) => handleChange(r, c, e.target.value)}
-                    className="w-8 h-8 border text-center font-bold text-lg uppercase bg-white text-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
-                    maxLength={1}
-                    inputMode="text"
-                    aria-label={`Cell ${r + 1}-${c + 1}`}
-                  />
-                </div>
-              ) : (
-                <div key={`${r}-${c}`} className="w-8 h-8 bg-gray-600" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center">
+          <div
+            className="grid gap-1 mb-6"
+            style={{ gridTemplateColumns: `repeat(${GRID_SIZE}, 2rem)` }}
+          >
+            {grid.map((row, r) =>
+              row.map((cell, c) =>
+                cell.letter ? (
+                  <div key={`${r}-${c}`} className="relative">
+                    {cell.number && (
+                      <span className="absolute text-[0.55rem] text-gray-900 top-0 left-0 pl-[2px]">
+                        {cell.number}
+                      </span>
+                    )}
+                    <input
+                      value={cell.userInput || ""}
+                      onChange={(e) => handleChange(r, c, e.target.value)}
+                      className="w-8 h-8 border text-center font-bold text-lg uppercase bg-white text-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-300"
+                      maxLength={1}
+                      inputMode="text"
+                      aria-label={`Cell ${r + 1}-${c + 1}`}
+                    />
+                  </div>
+                ) : (
+                  <div key={`${r}-${c}`} className="w-8 h-8 bg-gray-600" />
+                )
               )
-            )
-          )}
-        </div>
-
-        <div className="grid grid-cols gap-6 mb-4">
-          <div>
-            <h2 className="font-bold text-rose-200">Across</h2>
-            <ul className="mb-2 list-decimal list-inside text-gray-100">
-              {acrossClues.map((w) => (
-                <li key={w.number} className="mb-1">
-                  <span className="font-semibold mr-2">{w.number}.</span>
-                  <span>{w.clue}</span>
-                </li>
-              ))}
-            </ul>
+            )}
           </div>
 
-          <div>
-            <h2 className="font-bold text-rose-200">Down</h2>
-            <ul className="list-decimal list-inside text-gray-100">
-              {downClues.map((w) => (
-                <li key={w.number} className="mb-1">
-                  <span className="font-semibold mr-2">{w.number}.</span>
-                  <span>{w.clue}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="grid grid-cols gap-6 mb-4">
+            <div>
+              <h2 className="font-bold text-orange-200">Across</h2>
+              <ul className="mb-2 list-decimal list-inside text-gray-100">
+                {acrossClues.map((w) => (
+                  <li key={w.number} className="mb-1">
+                    <span className="font-semibold mr-2">{w.number}.</span>
+                    <span>{w.clue}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="font-bold text-orange-200">Down</h2>
+              <ul className="list-decimal list-inside text-gray-100">
+                {downClues.map((w) => (
+                  <li key={w.number} className="mb-1">
+                    <span className="font-semibold mr-2">{w.number}.</span>
+                    <span>{w.clue}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -199,7 +201,7 @@ export default function CrosswordPage() {
             Check Answers
           </Button>
           <Button
-            color="danger"
+            color="primary"
             className="px-6 py-2 rounded-full"
             onPress={() => {
               setGrid((prev) =>

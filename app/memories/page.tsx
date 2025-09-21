@@ -16,7 +16,7 @@ export default function Memories() {
   const memoryList: Memories = memories;
 
   return (
-    <section className="relative bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)] text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
+    <section className="relative bg-gradient-to-br from-neutral-900/60 to-neutral-800/70 text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
       <div className="container mx-auto text-center relative z-5 max-w-4xl">
         <div className="max-w-3xl mx-auto text-center font-serif mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">

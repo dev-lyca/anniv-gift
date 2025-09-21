@@ -34,8 +34,8 @@ export default function Gallery() {
 
   return (
     <section
-      className="relative min-h-screen bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)]  
-    py-16 px-6 font-serif"
+      className="relative min-h-screen bg-gradient-to-br from-neutral-900/60 to-neutral-800/70
+     text-white py-16 px-6 font-serif"
     >
       <div className="max-w-3xl mx-auto text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -151,7 +151,7 @@ export default function Gallery() {
           </motion.div>
         )}
       </AnimatePresence>
-      <BubbleBG/>
+      <BubbleBG />
     </section>
   );
 }

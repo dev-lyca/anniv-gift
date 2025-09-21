@@ -164,7 +164,7 @@ export default function Page() {
   };
 
   return (
-    <section className="relative bg-[linear-gradient(to_right,#e56443,#f08853,#cf7973,#fd9e8a,#ffcbba)] text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
+    <section className="relative bg-gradient-to-br from-neutral-900/60 to-neutral-800/70 text-white min-h-screen flex items-center justify-center overflow-hidden px-6">
       <div className="container mx-auto text-center relative z-5 max-w-4xl">
         <div className="flex flex-col items-center min-h-screen p-6 gap-6">
           <Card
@@ -172,7 +172,7 @@ export default function Page() {
          to-neutral-800/70 "
           >
             <CardBody className="flex flex-col gap-3">
-              <h2 className="text-xl text-pink-400 font-bold text-center">
+              <h2 className="text-xl text-orange-400 font-bold text-center">
                 Guess the Secret Word
               </h2>
               <p className="text-sm text-gray-100 text-center mb-3">
@@ -191,7 +191,7 @@ export default function Page() {
                 </Button>
               </div>
               {error && (
-                <p className="text-red-300 text-center font-bold text-lg mt-2">
+                <p className="text-orange-300 text-center font-bold text-lg mt-2">
                   {error}
                 </p>
               )}
